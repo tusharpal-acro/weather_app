@@ -16,7 +16,10 @@ def get_weather_data(request):
 		longitude = request.POST.get('longitude')
 		latitude = request.POST.get('latitude')
 		api_call = f"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={int(longitude)}&lon={int(latitude)}"
-		response = requests.get(api_call)
+		headers = requests.utils.default_headers()
+		headers.update({'User-Agent': 'Custom Agent',})
+		print(headers, " headers")
+		response = requests.get(api_call, headers)
 		print(response.content, "response")
 		print(type(response.content), "response type")	
 		return HttpResponse("Done")
